@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link  rel="stylesheet" href="../css/userInfo.css">
+    <script src="../js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">用户名</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" placeholder="请输入用户名">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">密码</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" placeholder="请输入密码">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="button" class="btn btn-default"
+                   style="width: 450px" id="sub" value="确定"/>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $(document).ready(function () {
+        var hj = $('.form-horizontal').children('.form-group');
+        var userName = parent.userName;
+        var userPassword = parent.passWord;
+         hj.eq(0).children('.col-sm-10').children('input').val(userName);
+         hj.eq(1).children('.col-sm-10').children('input').val(userPassword);
+    var a2=hj.eq(0).children('.col-sm-10').children('input').val();
+        $('#sub').on('click',function () {
+            $.ajax({
+                type:'post',
+                url:"http://1.14.150.103:80/delete",
+                data:{userName:a2},
+                success:function (data) {
+                    if(data==="1"){
+                        alert("注销成功")
+                    }else{
+                        alert("注销失败")
+                    }
+                }
+            })
+        })
+    })
+</script>
+</html>

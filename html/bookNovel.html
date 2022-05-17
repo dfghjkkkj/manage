@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../css/bookInfo.css">
+</head>
+<body>
+
+<div class="c1">
+    <input type="button" value="移除" id="clearAll"/>
+    <input type="button" value="新增记录" id="addData"/>
+    <table>
+        <thead>
+        <tr>
+            <th> <input type="checkbox" id="selectAll"/></th>
+            <th>图书ID</th>
+            <th>图书名称</th>
+            <th>出版社</th>
+            <th>是否已被借阅</th>
+            <th>借阅人名称</th>
+            <th>借阅时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<div class="cdiv">
+    <div class="delCon">
+        <div class="top"></div>
+        <div class="context">
+            <p style="display: none">确定要删除吗？</p>
+            <div class="c2_div2">
+                <label>图书名称：</label><input class="c2_text" id="Name" type="text"/></br>
+                <label>图书类别：</label><input class="c2_text" id="Type" type="text"/></br>
+                <label>出版社：</label><input class="c2_text" id="Publish" type="text"/></br>
+                <label>是否已被借阅：</label><input class="c2_text" id="isBorrowing" type="text"/></br>
+                <label>借阅人名称：</label><input class="c2_text" id="borrowName" type="text"/></br>
+                <label>借阅时间：</label><input class="c2_text" id="borrowTime" type="text"/>
+            </div>
+        </div>
+        <div class="btn">
+            <input type="button" value="取消" class="cancle no">
+            <input type="button" value="确定" class="ok yes">
+        </div>
+    </div>
+</div>
+<script src="../js/bookInfo.js"></script>
+<script>
+    type="";//操作类别
+    id="";//图书id
+    i="";
+    $('#selectAll').on('click',function (){
+        if($(this).prop("checked")){
+            $("td input").prop("checked",true);
+        }else{
+            $("td input").prop("checked",false);
+        }
+    })
+    $("td input").on('click',function () {
+        var numOfAll=$("tbody tr").length;
+        var numOfSelected=$("tbody input:checked").length;
+        $("th input").prop("checked",numOfAll===numOfSelected);
+    });
+
+    //1.查询  $(document).ready()
+    $(document).ready(function () {
+        //（1）获取科技类图书
+        selectByType("小说类");
+    })
+    //2.新增
+    $("#addData").on("click",function () {
+        //（1）显示弹窗
+        $(".cdiv").show();
+        $(".top").html("新增");
+        $(".cdiv p").hide();
+        $(".c2_div2").show();
+        type="insert";
+    })
+    //弹窗 取消
+    $(".no").on("click",function () {
+        $(".cdiv").hide()
+    })
+    //弹窗 确定
+    $(".yes").on("click",function () {
+        //获取用户输入内容
+        var Name=$("#Name").val();
+        var Type=$("#Type").val();
+        var Publish=$("#Publish").val();
+        var isBorrowing=$("#isBorrowing").val();
+        var borrowName=$("#borrowName").val();
+        var borrowTime=$("#borrowTime").val();
+        if(type==="insert"){
+            //数据插入至数据库
+            $.ajax({
+                type:'post',
+                url:"http://1.14.150.103:80/insertbooks",
+                data:{Name:Name,Type:Type,Publish:Publish,isBorrowing:isBorrowing,borrowName:borrowName,borrowTime:borrowTime},
+                success:function (data){
+                    if(data==="1"){
+                        //隐藏弹窗
+                        $(".no").trigger("click");
+                        alert("新增数据成功")
+                        selectByType("小说类")
+                    }else{
+                        alert("新增失败，请检查数据")
+                    }
+                }
+            })
+        }
+        if(type==="update"){
+            //修改数据
+            $.ajax({
+                type:'post',
+                url:"http://1.14.150.103:80/updatebook",
+                data:{ID:id,Name:Name,Type:Type,Publish:Publish,isBorrowing:isBorrowing,borrowName:borrowName,borrowTime:borrowTime},
+                success:function (data) {
+                    if(data==="1"){
+                        alert("修改成功")
+                        selectByType("小说类")
+                        $(".no").trigger("click");
+                    }else{
+                        alert("修改失败")
+                    }
+                }
+            })
+        }
+        if(type==='deleteAll'){
+            //移除
+            $('tbody tr').each(function (i,ele){
+                if($(ele).children('td').eq(0).children('input').prop('checked')){
+                    var id=$(ele).children('td').eq(1).text()
+                    $.ajax({
+                        type:'post',
+                        url:"http://1.14.150.103:80/deletebook",
+                        data:{ID:id},
+                        success:function (data) {
+                            if(data==="1"){
+                                alert("移除成功")
+                                selectByType("小说类")
+                                $(".no").trigger("click");
+                            }else{
+                                alert("移除失败")
+                            }
+                        }
+                    })
+                }
+            })
+        }
+        if(type==='delete'){
+            $.ajax({
+                type:'post',
+                url: "http://1.14.150.103:80/deletebook",
+                data: {ID:i},
+                success: function (data) {
+                    if (data === "1") {
+                        alert("删除成功")
+                        selectByType("小说类")
+                        $(".no").trigger("click");
+                    } else {
+                        alert("删除失败")
+                    }
+                }
+            })
+
+        }
+    })
+    //3.修改
+    $("tbody").on("click",".update",function () {
+        //（1）显示弹窗
+        $(".cdiv").show();
+        $(".top").html("修改");
+        $(".cdiv p").hide();
+        $(".c2_div2").show();
+        type="update";
+        //（2）该条数据显示在弹窗中
+        var tr=$(this).parents("tr");
+        id=tr.children("td").eq(1).text();
+        $("#Name").val(tr.children("td").eq(2).text());
+        $("#Type").val("科技类");
+        $("#Publish").val(tr.children("td").eq(3).text());
+        $("#isBorrowing").val(tr.children("td").eq(4).text());
+        $("#borrowName").val(tr.children("td").eq(5).text());
+        $("#borrowTime").val(tr.children("td").eq(6).text());
+    });
+    //4.移除
+    $('#clearAll').on('click',function (){
+        $(".cdiv").show();
+        $(".top").html("移除");
+        $(".cdiv p").show();
+        $(".c2_div2").hide();
+        type="deleteAll";
+    })
+    //5.删除
+    $("tbody").on("click",".delete",function () {
+        var tr=$(this).parents("tr");
+        i=tr.children("td").eq(1).text();
+        $(".cdiv").show();
+        $(".top").html("删除");
+        $(".cdiv p").show();
+        $(".c2_div2").hide();
+        type="delete";
+    })
+</script>
+</body>
+</html>

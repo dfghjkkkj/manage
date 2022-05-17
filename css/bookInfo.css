@@ -1,0 +1,131 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    width: 100%;
+    height: 100%;
+}
+table{
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #c0c0c0;
+}
+thead th{
+    color: #909399;
+    padding: 10px;
+    border: 1px solid #d0d0d0;
+}
+tbody td{
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #d0d0d0;
+}
+tr:hover{
+    background-color: #fafafa;
+    cursor: pointer;
+}
+a{
+    text-decoration: none;
+}
+.c2_div2{
+    text-align: center;
+}
+.c2_div2 label{
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+}
+.c2_text{
+    margin-top: 10px;
+    height: 25px;
+    width: 200px;
+}
+.cdiv{
+    position: absolute;
+    top:0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+}
+.delCon{
+    margin: 100px auto 0;
+    width: 400px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+.top{
+    line-height: 45px;
+    border-bottom:1px solid #ccc;
+    text-align: left;
+    padding-left:20px;
+}
+.delete{
+    width: 56px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 0;
+    color: white;
+    background-color: #f56c6c;
+}
+.update{
+    width: 56px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 0;
+    color: white;
+    background-color: #66b1ff;
+}
+.context{
+    padding:20px;
+}
+.btn{
+    text-align: right;
+    margin-right: 10px;
+}
+.btn input{
+    width: 56px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+#clearAll,#addData{
+    width: 56px;
+    height: 32px;
+    text-align: center;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+#clearAll{
+    border: 0;
+    color: white;
+    background-color: #f56c6c;
+}
+#addData{
+    width: 65px;
+    border: 0;
+    color: white;
+    background-color: #67c23a;
+}
+.cancle{
+    border: 0;
+    color: white;
+    background-color: #66b1ff;
+}
+.ok{
+    border: 1px solid #c6e2ff;
+    color: #606266;
+    background-color: white;
+}

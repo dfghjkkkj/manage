@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图书管理系统</title>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <link href="css/index.css" rel="stylesheet"/>
+</head>
+<body>
+<div>
+    <div class="bgDiv">
+        <form class="login">
+            <div class="logoImg">
+                <h2>用户登录</h2>
+            </div>
+            <div class="username">
+                <input class="userInp" type="text" name="userName" placeholder="请输入用户名"/>
+            </div>
+            <div class="pwd">
+                <input class="pwdInp" type="password" name="userPassword" placeholder="请输入密码"/>
+            </div>
+            <div class="forgetPwd">
+            </div>
+            <button class="btn Login" type="button">登录</button>
+        </form>
+    </div>
+</div>
+<script>
+    $(".Login").on("click",function () {
+        //1.获取用户名、密码
+        var userName=$(".userInp").val();
+        var userPassword=$(".pwdInp").val();
+        if(userName===""||userPassword===""){
+            alert("用户名、密码不能为空")
+            return;
+        }
+        //2.验证用户名、密码
+        //数据库中查询是否有该条记录
+        $.ajax({
+            type:'get',
+            url:'http://1.14.150.103:80/login',
+            data:{userName:userName,userPassword:userPassword},
+            //3.请求成功时的处理
+            //有：跳转到主页面
+            //没有：提示登录失败
+            success:function (data) {
+                console.log(data)
+                if(data!=="0"){
+                    window.location.href="html/mainPage.html?userName="+userName+"&userPassword="+userPassword;
+                }else{
+                    alert("用户名或密码错误，请重新登录")
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+body {
+    background: skyblue;
+}
+
+.bgDiv {
+    width: 547px;
+    height: 403px;
+    overflow: hidden;
+}
+
+.login {
+    width: 422px;
+    height: 339px;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    border-radius: 20px;
+}
+
+.logoImg {
+    color: #4892ff;
+    width: 141px;
+    height: 37px;
+    margin-top: 32px;
+    margin-left: 140px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.username,
+.pwd,
+.forgetPwd {
+    width: 366px;
+    height: 60px;
+    border-bottom: 1px solid #efefef;
+    margin: 0 28px;
+    line-height:60px;
+}
+
+
+.userInp,
+.pwdInp {
+    width: 320px;
+    height: 25px;
+    margin-top: 18px;
+    border: none;
+    outline: none;
+    margin-left: 20px;
+}
+
+.forgetPwd {
+    border: none;
+    line-height: 58px;
+    color: #3e82bf;
+    font-size: 16px;
+}
+
+
+.btn {
+    width: 364px;
+    height: 40px;
+    background: #4892ff;
+    border: 1px solid #326dcc;
+    color: #fff;
+    font-size: 16px;
+    margin-left: 30px;
+}

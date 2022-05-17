@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图书管理系统</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../css/mainPage.css">
+</head>
+<body>
+<div class="head">
+    <h3>图书管理系统</h3>
+</div>
+<div class="body">
+    <div class="nav">
+        <ul>
+            <li>
+                <!--一级标题-->
+                <span class="span" style="color: #ffd04b">图书信息</span>
+                <!--二级标题-->
+                <div class="div" style="display: block" name="book">
+                    <div style="color: #ffd04b">科技类</div>
+                    <div>教育类</div>
+                    <div>生活类</div>
+                    <div>小说类</div>
+                </div>
+            </li>
+            <li>
+                <!--一级标题-->
+                <span class="span">用户信息</span>
+                <!--二级标题-->
+                <div class="div" name="user">
+                    <div style="color: #ffd04b">基本信息管理</div>
+                    <div>修改密码</div>
+                    <div>用户注销</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <iframe src="bookSeci.html" frameborder="0"></iframe>
+    </div>
+</div>
+<div class="dial">
+    <div class="delCon">
+        <div class="top">注销</div>
+        <div class="context">
+            <p>确定要注销吗？</p>
+        </div>
+        <div class="btn">
+            <input type="button" value="取消" class="no">
+            <input type="button" value="确定" class="yes">
+        </div>
+    </div>
+</div>
+<script>
+
+     var url=window.location.href;
+    var n1=url.indexOf('=');var n2=url.indexOf('&');var n3=url.lastIndexOf('=');var n4=url.length
+    var userName=url.substr(n1+1,n2-n1-1);
+    var passWord=url.substr(n3+1,n4-n3);
+
+    //一级菜单点击
+    $("span").on("click",function () {
+        //手风琴实现
+        $(".div").hide();//隐藏所有div
+        //显示被点击的标题对应div
+        $(this).parent("li").children("div").show();
+        //文本颜色修改
+        //1.所有的标题都变成白色
+        $("ul span").css("color","white");
+        $("ul div").css("color","white");
+        //2.当前一级标题变成金色
+        $(this).css("color","#ffd04b")
+        //3.当前一级标题的第一个二级标题变成金色
+        $(this).parent("li").children("div").children("div").eq(0).css("color","#ffd04b")
+        //框架内容修改
+        var type=$(this).parent("li").children("div").attr("name")
+        if(type==="book"){
+            $("iframe").attr("src","bookSeci.html")
+        }else{
+            $("iframe").attr("src","userManger.html")
+        }
+    })
+    //二级菜单点击
+    $(".div div").on("click",function () {
+       // 1.文本颜色修改
+       //（1）this变成金色
+        $(this).css("color","#ffd04b")
+       //（2）其他兄弟节点变成白色
+        $(this).siblings("div").css("color","white")
+        //2.框架内容修改
+        //(1)获取类别
+        var type=$(this).parent("div").attr("name");
+        //(2)获取index
+        var index=$(this).index();
+        switch (index){
+            case 0:if(type==="book")
+                  $("iframe").attr("src","bookSeci.html");
+                   else
+                  $("iframe").attr("src","userManger.html")
+                  break;
+            case 1:if(type==="book")
+                 $("iframe").attr("src","bookEdu.html");
+                 else
+                 $("iframe").attr("src","updataPassword.html");
+                break;
+            case 2:if(type==="book")
+                $("iframe").attr("src","bookLife.html");
+            else
+                $("iframe").attr("src","zhuxiao.html")
+               break;
+            case 3:if(type==="book")
+                $("iframe").attr("src","bookNovel.html");
+                break;
+        }
+    })
+    //初始化时，设置框架大小
+    $(".nav").css("height",window.innerHeight-70);
+    $("iframe").css({"width": document.body.clientWidth-250,
+        "height":window.innerHeight-110})
+    //页面尺寸改变时，修改框架大小
+    window.onresize=function () {
+        $(".nav").css("height",window.innerHeight-70);
+        $("iframe").css({"width": document.body.clientWidth-250,
+            "height":window.innerHeight-100})
+    }
+</script>
+</body>
+</html>

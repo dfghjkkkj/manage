@@ -1,0 +1,19 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-image: url("../images/ba.png");
+}
+.form-horizontal{
+    width :600px;
+    float: left;
+    padding-left: 50px;
+    padding-top: 50px;
+}
+.form-control{
+    width: 450px;
+}
